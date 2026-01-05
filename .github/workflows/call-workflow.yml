@@ -1,0 +1,14 @@
+name: Trigger Workloads Test
+
+on:
+  push:
+    branches: [ "main" ]
+  workflow_dispatch: # Adds a "Run Now" button for easy testing
+
+jobs:
+  call-remote-workflow:
+    # SYNTAX: owner/repo/path/filename@ref
+    uses: NaomiEisen/workloads/.github/workflows/reusable-ci.yml@main
+    with:
+      who_is_calling: "The Playground App"
+    secrets: inherit
