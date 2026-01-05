@@ -1,14 +1,20 @@
-name: Trigger Workloads Test
+name: Test Arguments & Failure
 
-on:
-  push:
-    branches: [ "main" ]
-  workflow_dispatch: # Adds a "Run Now" button for easy testing
+on: [workflow_dispatch]
 
 jobs:
-  call-remote-workflow:
-    # SYNTAX: owner/repo/path/filename@ref
+  # Job 1: Should PASS and print your message
+  test-passing-arguments:
     uses: NaomiEisen/workloads/.github/workflows/reusable-ci.yml@main
     with:
-      who_is_calling: "The Playground App"
+      message_to_print: "Hello from the success path! 🚀"
+      simulate_error: false
+    secrets: inherit
+
+  # Job 2: Should FAIL and block the PR
+  test-failure-detection:
+    uses: NaomiEisen/workloads/.github/workflows/reusable-ci.yml@main
+    with:
+      message_to_print: "I am about to crash..."
+      simulate_error: true
     secrets: inherit
